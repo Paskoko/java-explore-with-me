@@ -4,7 +4,7 @@ import ru.practicum.EndpointHitDto;
 
 import java.time.LocalDateTime;
 
-import static ru.practicum.util.Util.formatter;
+import static ru.practicum.util.Util.FORMATTER;
 
 /**
  * Class mapper for statistics object
@@ -18,7 +18,7 @@ public class StatMapper {
      * @return Statistics object
      */
     public static Statistics toStatistics(EndpointHitDto endpointHitDto) {
-        String timeStamp = (LocalDateTime.now().format(formatter));
+        String timeStamp = (LocalDateTime.now().format(FORMATTER));
 
         if (endpointHitDto.getTimeStamp() != null) {
             timeStamp = endpointHitDto.getTimeStamp();
@@ -27,7 +27,7 @@ public class StatMapper {
                 .app(endpointHitDto.getApp())
                 .uri(endpointHitDto.getUri())
                 .ip(endpointHitDto.getIp())
-                .timeStamp(LocalDateTime.parse(timeStamp, formatter))
+                .timeStamp(LocalDateTime.parse(timeStamp, FORMATTER))
                 .build();
     }
 
@@ -42,7 +42,7 @@ public class StatMapper {
                 .app(statistics.getApp())
                 .uri(statistics.getUri())
                 .ip(statistics.getIp())
-                .timeStamp(statistics.getTimeStamp().format(formatter))
+                .timeStamp(statistics.getTimeStamp().format(FORMATTER))
                 .build();
     }
 }
