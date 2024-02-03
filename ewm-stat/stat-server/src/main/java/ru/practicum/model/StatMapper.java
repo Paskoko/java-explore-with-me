@@ -20,7 +20,7 @@ public class StatMapper {
     public static Statistics toStatistics(EndpointHitDto endpointHitDto) {
         String timeStamp = (LocalDateTime.now().format(formatter));
 
-        if (endpointHitDto.getTimeStamp()!=null) {
+        if (endpointHitDto.getTimeStamp() != null) {
             timeStamp = endpointHitDto.getTimeStamp();
         }
         return Statistics.builder()
