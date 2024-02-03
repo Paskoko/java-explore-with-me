@@ -18,11 +18,16 @@ public class StatMapper {
      * @return Statistics object
      */
     public static Statistics toStatistics(EndpointHitDto endpointHitDto) {
+        String timeStamp = (LocalDateTime.now().format(formatter));
+
+        if (endpointHitDto.getTimeStamp()!=null) {
+            timeStamp = endpointHitDto.getTimeStamp();
+        }
         return Statistics.builder()
                 .app(endpointHitDto.getApp())
                 .uri(endpointHitDto.getUri())
                 .ip(endpointHitDto.getIp())
-                .timeStamp(LocalDateTime.parse(endpointHitDto.getTimeStamp(), formatter))
+                .timeStamp(LocalDateTime.parse(timeStamp, formatter))
                 .build();
     }
 

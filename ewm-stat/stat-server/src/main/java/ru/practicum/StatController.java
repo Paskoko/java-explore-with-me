@@ -1,5 +1,6 @@
 package ru.practicum;
 
+import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +45,7 @@ public class StatController {
     @GetMapping("/stats")
     public List<ViewStatsDto> getStat(@RequestParam(value = "start") String start,
                                       @RequestParam(value = "end") String end,
-                                      @RequestParam(value = "uris", required = false) String[] uris,
+                                      @RequestParam(value = "uris", required = false) @Nullable String[] uris,
                                       @RequestParam(value = "unique", defaultValue = "false", required = false) boolean unique) {
         return statService.getStat(start, end, uris, unique);
     }

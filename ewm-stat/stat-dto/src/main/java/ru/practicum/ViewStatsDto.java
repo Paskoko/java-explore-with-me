@@ -18,5 +18,5 @@ public class ViewStatsDto {
     @NotBlank
     private String uri;
     @NotBlank
-    private int hits;
+    private long hits;
 }
