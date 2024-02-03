@@ -26,7 +26,13 @@ public class StatMapper {
                 .build();
     }
 
-    public static EndpointHitDto toEndpointHitDto(Statistics statistics){
+    /**
+     * Transform from Statistics to EndpointHitDto object
+     *
+     * @param statistics to transform
+     * @return EndpointHitDto object
+     */
+    public static EndpointHitDto toEndpointHitDto(Statistics statistics) {
         return EndpointHitDto.builder()
                 .app(statistics.getApp())
                 .uri(statistics.getUri())
