@@ -7,6 +7,7 @@ import ru.practicum.ViewStatsDto;
 import ru.practicum.model.StatMapper;
 import ru.practicum.storage.StatRepository;
 
+import javax.validation.ValidationException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -49,6 +50,10 @@ public class StatServiceImpl implements StatService {
      */
     @Override
     public List<ViewStatsDto> getStat(String start, String end, String[] uris, boolean unique) {
+        if (LocalDateTime.parse(start, FORMATTER).isAfter(LocalDateTime.parse(end, FORMATTER))){
+            throw new ValidationException("Start time should be before end time.");
+        }
+
         if (unique) {
             if (uris != null) {
                 return statRepository.getAllWithUniqueIp(LocalDateTime.parse(start, FORMATTER),
