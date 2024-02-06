@@ -225,8 +225,6 @@ public class EventServiceImpl implements EventService {
 
         event.setViews((Integer) listStat.get(0).get("hits"));
 
-        //TODO add confirm requests
-
         eventRepository.save(event);
 
         return EventMapper.toEventFullDto(event);
@@ -363,10 +361,6 @@ public class EventServiceImpl implements EventService {
         } else {
             page = PageRequest.of(from / size, size);
         }
-
-
-        //TODO add confirm requests
-
 
         List<Event> eventList = eventRepository.findAll(builder, page).getContent();
 
