@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Repository interface for users table
  */
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Integer> {
     /**
      * Find users by list of ids with pagination
      *

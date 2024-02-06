@@ -50,7 +50,7 @@ public class StatServiceImpl implements StatService {
      */
     @Override
     public List<ViewStatsDto> getStat(String start, String end, String[] uris, boolean unique) {
-        if (LocalDateTime.parse(start, FORMATTER).isAfter(LocalDateTime.parse(end, FORMATTER))){
+        if (LocalDateTime.parse(start, FORMATTER).isAfter(LocalDateTime.parse(end, FORMATTER))) {
             throw new ValidationException("Start time should be before end time.");
         }
 

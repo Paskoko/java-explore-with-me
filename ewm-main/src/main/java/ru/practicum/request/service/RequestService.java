@@ -49,8 +49,8 @@ public interface RequestService {
     /**
      * Change request's status for user's event
      *
-     * @param userId  of owner
-     * @param eventId of event
+     * @param userId        of owner
+     * @param eventId       of event
      * @param updateRequest to change
      * @return changed request
      */
