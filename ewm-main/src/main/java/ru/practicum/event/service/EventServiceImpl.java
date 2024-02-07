@@ -46,7 +46,9 @@ public class EventServiceImpl implements EventService {
     private final StatClient statClient;
 
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository, LocationRepository locationRepository, CategoryRepository categoryRepository, UserRepository userRepository, StatClient statClient) {
+    public EventServiceImpl(EventRepository eventRepository, LocationRepository locationRepository,
+                            CategoryRepository categoryRepository, UserRepository userRepository,
+                            StatClient statClient) {
         this.eventRepository = eventRepository;
         this.locationRepository = locationRepository;
         this.categoryRepository = categoryRepository;

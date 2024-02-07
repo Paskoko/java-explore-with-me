@@ -75,7 +75,9 @@ public class CategoryServiceIml implements CategoryService {
             throw new ResourceNotFoundException("Category with id=" + id + " was not found.");
         }
         categoryDto.setId(id);  // add id to validate in repository save method (if id exists - merge in table)
-        return CategoryMapper.toCategoryDto(categoryRepository.save(CategoryMapper.toCategory(categoryDto)));
+        Category categoryToSave = CategoryMapper.toCategory(categoryDto);
+
+        return CategoryMapper.toCategoryDto(categoryRepository.save(categoryToSave));
     }
 
     /**

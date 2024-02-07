@@ -10,6 +10,6 @@ import java.util.List;
  */
 @Data
 public class EventRequestStatusUpdateRequest {
-    List<Integer> requestIds;
-    RequestStatus status;
+    private List<Integer> requestIds;
+    private RequestStatus status;
 }

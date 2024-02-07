@@ -230,10 +230,10 @@ public class EventMapper {
      * @return eventsState object
      */
     private static EventState toEventState(UserStateAction userStateAction) {
-        if (userStateAction.equals(UserStateAction.SEND_TO_REVIEW)) {
+        if (userStateAction == UserStateAction.SEND_TO_REVIEW) {
             return EventState.PENDING;
         }
-        if (userStateAction.equals(UserStateAction.CANCEL_REVIEW)) {
+        if (userStateAction == UserStateAction.CANCEL_REVIEW) {
             return EventState.CANCELED;
         }
         return null;
@@ -246,10 +246,10 @@ public class EventMapper {
      * @return eventsState object
      */
     private static EventState toEventState(AdminStateAction adminStateAction) {
-        if (adminStateAction.equals(AdminStateAction.PUBLISH_EVENT)) {
+        if (adminStateAction == AdminStateAction.PUBLISH_EVENT) {
             return EventState.PUBLISHED;
         }
-        if (adminStateAction.equals(AdminStateAction.REJECT_EVENT)) {
+        if (adminStateAction == AdminStateAction.REJECT_EVENT) {
             return EventState.CANCELED;
         }
         return null;
