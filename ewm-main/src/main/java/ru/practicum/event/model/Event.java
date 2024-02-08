@@ -53,5 +53,6 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private EventState state;
     private String title;
+    private Double rating;
     private int views;
 }
