@@ -1,2 +1,3 @@
 # java-explore-with-me
-Template repository for ExploreWithMe project.
+Repository for ExploreWithMe project.
+https://github.com/Paskoko/java-explore-with-me/pull/3

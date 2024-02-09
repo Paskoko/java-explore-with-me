@@ -80,7 +80,7 @@ public class RequestServiceImpl implements RequestService {
         if ((event.getParticipantLimit() != 0) && (event.getConfirmedRequests() == event.getParticipantLimit())) {
             throw new RequestValidationException("Event participation limit has been reached.");
         }
-        if (event.getParticipantLimit() == 0) {
+        if ((event.getParticipantLimit() == 0) || (!event.isRequestModeration())) {
             newRequest.setStatus(RequestStatus.CONFIRMED);
         }
         event.setConfirmedRequests(event.getConfirmedRequests() + 1);

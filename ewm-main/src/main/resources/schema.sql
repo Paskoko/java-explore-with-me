@@ -4,12 +4,15 @@ DROP TABLE IF EXISTS users,
             event_compilations,
             locations,
             events,
-            requests;
+            requests,
+            ratings,
+            user_ratings;
 
 CREATE TABLE IF NOT EXISTS users(
     user_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY NOT NULL,
     email varchar(320) NOT NULL,
 	name varchar(320) NOT NULL,
+	rating DOUBLE,
 	CONSTRAINT uq_email UNIQUE (email)
 );
 
@@ -48,6 +51,8 @@ CREATE TABLE IF NOT EXISTS events(
     request_moderation boolean NOT NULL,
     state VARCHAR(30),
     title varchar(120) NOT NULL,
+    rating DOUBLE,
+    my_rating INTEGER,
     views INTEGER
 );
 
@@ -64,3 +69,16 @@ CREATE TABLE IF NOT EXISTS requests(
     id_requester INTEGER REFERENCES users (user_id) ON DELETE CASCADE NOT NULL,
     status VARCHAR(30) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS ratings(
+    rating_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY NOT NULL,
+    id_event INTEGER NOT NULL,
+    rating INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS user_ratings(
+    id_user INTEGER REFERENCES users (user_id) NOT NULL,
+    id_rating INTEGER REFERENCES ratings (rating_id) NOT NULL,
+    PRIMARY KEY (id_user, id_rating)
+);
+

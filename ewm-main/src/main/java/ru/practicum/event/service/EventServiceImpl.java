@@ -16,6 +16,7 @@ import ru.practicum.event.model.Location;
 import ru.practicum.event.model.QEvent;
 import ru.practicum.event.storage.EventRepository;
 import ru.practicum.event.storage.LocationRepository;
+import ru.practicum.user.model.User;
 import ru.practicum.user.storage.UserRepository;
 import ru.practicum.util.exception.DateException;
 import ru.practicum.util.exception.EventValidationException;
@@ -26,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static ru.practicum.util.Util.FORMATTER;
@@ -125,7 +127,10 @@ public class EventServiceImpl implements EventService {
 
         Event updatedEvent = eventRepository.save(EventMapper.toEvent(updateEvent, event, category, location));
 
-        return EventMapper.toEventFullDto(updatedEvent);
+        EventFullDto result = EventMapper.toEventFullDto(updatedEvent);
+        result.setMyRating(getMyRating(userId, eventId));
+
+        return result;
     }
 
     /**
@@ -196,7 +201,10 @@ public class EventServiceImpl implements EventService {
 
         validateUserId(userId);
 
-        return EventMapper.toEventFullDto(event);
+        EventFullDto result = EventMapper.toEventFullDto(event);
+        result.setMyRating(getMyRating(userId, eventId));
+
+        return result;
     }
 
     /**
@@ -247,7 +255,12 @@ public class EventServiceImpl implements EventService {
         PageRequest page = PageRequest.of(from / size, size);
         BooleanExpression byUserId = QEvent.event.initiator.id.eq(userId);
         List<Event> eventList = eventRepository.findAll(byUserId, page).getContent();
-        return EventMapper.toEventShortDtoList(eventList);
+
+        List<EventShortDto> result = EventMapper.toEventShortDtoList(eventList);
+        result.stream().peek(eventShortDto ->
+                eventShortDto.setMyRating(getMyRating(userId, eventShortDto.getId())));
+
+        return result;
     }
 
     /**
@@ -407,5 +420,25 @@ public class EventServiceImpl implements EventService {
                     new ResourceNotFoundException("Category with id=" + updCatId + " was not found."));
         }
         return category;
+    }
+
+    /**
+     * Get personal user rating for the event
+     *
+     * @param userId  of user
+     * @param eventId of the event
+     * @return personal rating
+     */
+    private Integer getMyRating(int userId, int eventId) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new ResourceNotFoundException("User with id=" + userId + " was not found."));
+
+        AtomicInteger personalRating = new AtomicInteger();
+        user.getUserRatings().stream().peek(rating -> {
+            if (rating.getEventId() == eventId) {
+                personalRating.set(rating.getRating());
+            }
+        });
+        return personalRating.get();
     }
 }
